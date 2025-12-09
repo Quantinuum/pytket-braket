@@ -27,6 +27,18 @@ from uuid import uuid4
 
 import boto3
 import numpy as np
+
+import braket  # type: ignore
+import braket.circuits  # type: ignore
+from braket.aws import AwsDevice, AwsSession  # type: ignore
+from braket.aws.aws_device import AwsDeviceType  # type: ignore
+from braket.aws.aws_quantum_task import AwsQuantumTask  # type: ignore
+from braket.circuits.observable import Observable  # type: ignore
+from braket.circuits.qubit_set import QubitSet  # type: ignore
+from braket.circuits.result_type import ResultType  # type: ignore
+from braket.device_schema import DeviceActionType  # type: ignore
+from braket.devices import LocalSimulator  # type: ignore
+from braket.tasks.local_quantum_task import LocalQuantumTask  # type: ignore
 from pytket.architecture import Architecture, FullyConnected
 from pytket.backends import Backend, CircuitStatus, ResultHandle, StatusEnum
 from pytket.backends.backend import KwargTypes
@@ -35,6 +47,10 @@ from pytket.backends.backendinfo import BackendInfo
 from pytket.backends.backendresult import BackendResult
 from pytket.backends.resulthandle import _ResultIdTuple
 from pytket.circuit import Circuit, OpType
+from pytket.extensions.braket.braket_convert import (
+    get_avg_characterisation,
+    tk_to_braket,
+)
 from pytket.passes import (
     AutoRebase,
     AutoSquash,
@@ -67,22 +83,6 @@ from pytket.predicates import (
 from pytket.utils import prepare_circuit
 from pytket.utils.operators import QubitPauliOperator
 from pytket.utils.outcomearray import OutcomeArray
-
-import braket  # type: ignore
-import braket.circuits  # type: ignore
-from braket.aws import AwsDevice, AwsSession  # type: ignore
-from braket.aws.aws_device import AwsDeviceType  # type: ignore
-from braket.aws.aws_quantum_task import AwsQuantumTask  # type: ignore
-from braket.circuits.observable import Observable  # type: ignore
-from braket.circuits.qubit_set import QubitSet  # type: ignore
-from braket.circuits.result_type import ResultType  # type: ignore
-from braket.device_schema import DeviceActionType  # type: ignore
-from braket.devices import LocalSimulator  # type: ignore
-from braket.tasks.local_quantum_task import LocalQuantumTask  # type: ignore
-from pytket.extensions.braket.braket_convert import (
-    get_avg_characterisation,
-    tk_to_braket,
-)
 
 from .config import BraketConfig
 
@@ -382,14 +382,14 @@ class BraketBackend(Backend):
             # This can happen with quantum anealers (e.g. D-Wave devices)
             raise ValueError(f"Unsupported device {device}")
 
-        supported_ops = set(  # noqa: C401
+        supported_ops = {
             op.lower()
             for op in (
                 props["paradigm"]["nativeGateSet"]
                 if self._verbatim
                 else device_info["supportedOperations"]
             )
-        )
+        }
         supported_result_types = device_info["supportedResultTypes"]
         self._result_types = set()
         for rt in supported_result_types:
@@ -524,10 +524,10 @@ class BraketBackend(Backend):
                 connectivity_graph = connectivity["connectivityGraph"]
                 # Convert strings to ints
                 if schema in (IQM_SCHEMA, RIGETTI_SCHEMA):
-                    connectivity_graph = dict(  # noqa: C402
-                        (int(k), [int(v) for v in l])
+                    connectivity_graph = {
+                        int(k): [int(v) for v in l]
                         for k, l in connectivity_graph.items()
-                    )
+                    }
                     # each connectivity graph key will be an int
                     # connectivity_graph values will be lists
                     all_qubits_set = set()
@@ -1001,9 +1001,9 @@ class BraketBackend(Backend):
             props = aws_device.properties.dict()
             try:
                 device_info = props["action"][DeviceActionType.JAQCD]
-                supported_ops = set(  # noqa: C401
+                supported_ops = {
                     op.lower() for op in device_info["supportedOperations"]
-                )
+                }
                 singleqs, multiqs = cls._get_gate_set(
                     supported_ops, device_type, verbatim
                 )
