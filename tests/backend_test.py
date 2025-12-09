@@ -480,7 +480,7 @@ def test_local_simulator() -> None:
 
 
 def test_implicit_qubit_perm() -> None:
-    # https://github.com/CQCL/pytket-braket/issues/55
+    # https://github.com/Quantinuum/pytket-braket/issues/55
     b = BraketBackend(local=True)
 
     # State, without measurement:
