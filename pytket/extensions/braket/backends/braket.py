@@ -655,7 +655,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                None,
+                "0.0.1",
                 arch,
                 singleqs.union(multiqs),
                 all_node_gate_errors=node_errors,
@@ -666,7 +666,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                None,
+                "0.0.1",
                 arch,
                 singleqs.union(multiqs),
             )
