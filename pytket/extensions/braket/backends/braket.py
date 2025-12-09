@@ -35,7 +35,6 @@ from pytket.backends.backendinfo import BackendInfo
 from pytket.backends.backendresult import BackendResult
 from pytket.backends.resulthandle import _ResultIdTuple
 from pytket.circuit import Circuit, OpType
-from pytket.extensions.braket._metadata import __extension_version__
 from pytket.passes import (
     AutoRebase,
     AutoSquash,
@@ -656,7 +655,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                __extension_version__,
+                None,
                 arch,
                 singleqs.union(multiqs),
                 all_node_gate_errors=node_errors,
@@ -667,7 +666,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                __extension_version__,
+                None,
                 arch,
                 singleqs.union(multiqs),
             )
