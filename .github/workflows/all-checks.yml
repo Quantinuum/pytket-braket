@@ -50,5 +50,9 @@ jobs:
     with:
       os: ${{ matrix.os }}
       pyver: ${{ matrix.pyver }}
-      TODO: ${{ secrets.TODO }}
-
+    secrets:
+      PYTKET_REMOTE_BRAKET_ACCESS_KEY_ID: ${{ secrets.PYTKET_REMOTE_BRAKET_ACCESS_KEY_ID }}
+      PYTKET_REMOTE_BRAKET_ACCESS_KEY_SECRET: ${{ secrets.PYTKET_REMOTE_BRAKET_ACCESS_KEY_SECRET }}
+      PYTKET_REMOTE_BRAKET_REGION: ${{ secrets.PYTKET_REMOTE_BRAKET_REGION }}
+      PYTKET_REMOTE_BRAKET_BUCKET: ${{ secrets.PYTKET_REMOTE_BRAKET_BUCKET }}
+      PYTKET_REMOTE_BRAKET_FOLDER: ${{ secrets.PYTKET_REMOTE_BRAKET_FOLDER }}
