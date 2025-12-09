@@ -1,5 +1,5 @@
 [project]
-name = "pytket-TODOEXTNAME"
+name = "pytket-braket"
 dynamic = ["version"]
 requires-python = ">=3.10,<4.0"
 
@@ -35,9 +35,9 @@ TODOOPTDEP = ["pytket >= 2.7.0"]
 
 
 [project.urls]
-documentation = "https://tket.quantinuum.com/extensions/pytket-TODOEXTNAME/index.html"
-source = "https://github.com/Quantinuum/pytket-TODOEXTNAME"
-tracker = "https://github.com/Quantinuum/pytket-TODOEXTNAME/issues"
+documentation = "https://tket.quantinuum.com/extensions/pytket-braket/index.html"
+source = "https://github.com/Quantinuum/pytket-braket"
+tracker = "https://github.com/Quantinuum/pytket-braket/issues"
 
 [tool.setuptools.packages]
 find = {}
