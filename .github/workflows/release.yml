@@ -39,7 +39,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
     - name: Download wheel
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         path: wheelhouse
         pattern: wheel
