@@ -84,6 +84,7 @@ from pytket.utils import prepare_circuit
 from pytket.utils.operators import QubitPauliOperator
 from pytket.utils.outcomearray import OutcomeArray
 
+from .._metadata import __extension_version__
 from .config import BraketConfig
 
 if TYPE_CHECKING:
@@ -655,7 +656,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                "0.0.1",
+                __extension_version__,
                 arch,
                 singleqs.union(multiqs),
                 all_node_gate_errors=node_errors,
@@ -666,7 +667,7 @@ class BraketBackend(Backend):
             backend_info = BackendInfo(
                 cls.__name__,
                 device_name,
-                "0.0.1",
+                __extension_version__,
                 arch,
                 singleqs.union(multiqs),
             )
