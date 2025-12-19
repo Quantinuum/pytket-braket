@@ -7,7 +7,7 @@
 with tket, a quantum computing toolkit and optimising compiler developed by Quantinuum.
 
 `pytket-braket` is an extension to `pytket` that allows `pytket` circuits to be
-executed on .
+executed on a range of devices and simulators via Amazon's Braket service.
 
 Some useful links:
 
