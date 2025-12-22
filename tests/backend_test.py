@@ -20,8 +20,10 @@ from typing import cast
 import numpy as np
 import pytest
 from hypothesis import given, settings, strategies
+
 from pytket.architecture import FullyConnected
 from pytket.circuit import Bit, Circuit, OpType, Qubit
+from pytket.extensions.braket import BraketBackend
 from pytket.passes import BasePass, SequencePass
 from pytket.pauli import Pauli, QubitPauliString
 from pytket.utils.expectations import (
@@ -29,8 +31,6 @@ from pytket.utils.expectations import (
     get_pauli_expectation_value,
 )
 from pytket.utils.operators import QubitPauliOperator
-
-from pytket.extensions.braket import BraketBackend
 
 # To test on AWS backends, first set up auth using boto3, then set the S3 bucket and
 # folder in pytket config. See:
@@ -480,7 +480,7 @@ def test_local_simulator() -> None:
 
 
 def test_implicit_qubit_perm() -> None:
-    # https://github.com/CQCL/pytket-braket/issues/55
+    # https://github.com/Quantinuum/pytket-braket/issues/55
     b = BraketBackend(local=True)
 
     # State, without measurement:
