@@ -31,6 +31,9 @@ dependencies = [
     "amazon-braket-schemas ~= 1.26",
     "amazon-braket-default-simulator ~= 1.29",
     "boto3-stubs",
+    "llvmlite>=0.37.0",
+    "numba>=0.48.0",
+
 ]
 
 [project.urls]
