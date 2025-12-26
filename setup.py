@@ -34,8 +34,8 @@ setup(
     python_requires=">=3.10",
     project_urls={
         "Documentation": "https://tket.quantinuum.com/extensions/pytket-braket/index.html",
-        "Source": "https://github.com/CQCL/pytket-braket",
-        "Tracker": "https://github.com/CQCL/pytket-braket/issues",
+        "Source": "https://github.com/Quantinuum/pytket-braket",
+        "Tracker": "https://github.com/Quantinuum/pytket-braket/issues",
     },
     description="Extension for pytket, providing access to Amazon Braket backends",
     long_description=open("README.md").read(),  # noqa: SIM115
@@ -44,10 +44,10 @@ setup(
     packages=find_namespace_packages(include=["pytket.*"]),
     include_package_data=True,
     install_requires=[
-        "pytket >= 2.10.1",
-        "amazon-braket-sdk ~= 1.101",
-        "amazon-braket-schemas ~= 1.26",
-        "amazon-braket-default-simulator ~= 1.29",
+        "pytket >= 2.11.0",
+        "amazon-braket-sdk ~= 1.107.0",
+        "amazon-braket-schemas ~= 1.27.0",
+        "amazon-braket-default-simulator ~= 1.32.1",
         "boto3-stubs",
     ],
     classifiers=[
