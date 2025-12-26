@@ -3,6 +3,12 @@
 Changelog
 ~~~~~~~~~
 
+0.46.0 (Unreleased)
+-----------------
+
+* Update pytket minimum version requirement to 2.6.0.
+* Add optional "verbatim" argument to BracketBackend for supporting verbatim circuits execution. See: https://docs.aws.amazon.com/braket/latest/developerguide/braket-constructing-circuit.html?tag=local002-20#verbatim-compilation
+
 0.45.0 (October 2025)
 ---------------------
 
@@ -61,9 +67,7 @@ Changelog
 0.36.0 (April 2024)
 -------------------
 
-* Updated pytket version requirement to 1.27.
-* Devices with full connectivity will use the `FullyConnected` class
-  to represent their architecture.
+* Add support for AQT device 
 
 0.35.1 (March 2024)
 -------------------
