@@ -103,6 +103,10 @@ IQM_SCHEMA = {
     "name": "braket.device_schema.iqm.iqm_provider_properties",
     "version": "1",
 }
+AQT_SCHEMA = {
+    "name": "braket.device_schema.aqt.aqt_provider_properties",
+    "version": "1",
+}
 
 _gate_types = {
     "amplitude_damping": None,
@@ -290,14 +294,14 @@ class BraketBackend(Backend):
             default: False
         :param local_device: name of local device (ignored if local=False) -- e.g.
             "braket_sv" (default) or "braket_dm".
-        :param device: device name from device ARN (e.g. "Forte-1", "Ankaa-3", "Garnet", ...),
+        :param device: device name from device ARN (e.g. "Forte-1", "Ankaa-3", "Garnet", "Ibex-Q1" ...),
             default: "sv1"
         :param region: region from device ARN, default: ""
         :param s3_bucket: name of S3 bucket to store results
         :param s3_folder: name of folder ("key") in S3 bucket to store results in
         :param device_type: device type from device ARN (e.g. "qpu"),
             default: "quantum-simulator"
-        :param provider: provider name from device ARN (e.g. "ionq", "rigetti", "iqm", ...),
+        :param provider: provider name from device ARN (e.g. "ionq", "rigetti", "iqm", "aqt", ...),
             default: "amazon"
         :param aws_session: braket AwsSession object, to pass credentials in if not
             configured on local machine
@@ -567,9 +571,9 @@ class BraketBackend(Backend):
                     "float", fid["1Q"]["mean"]
                 )
                 get_readout_error: Callable[[Node], float] = lambda n: 0.0
-                get_link_error: Callable[[Node, Node], float] = (
-                    lambda n0, n1: 1.0 - cast("float", fid["2Q"]["mean"])
-                )
+                get_link_error: Callable[
+                    [Node, Node], float
+                ] = lambda n0, n1: 1.0 - cast("float", fid["2Q"]["mean"])
             elif schema == RIGETTI_SCHEMA:
                 specs = characteristics["specs"]
                 benchmarks = specs["benchmarks"]
@@ -622,6 +626,25 @@ class BraketBackend(Backend):
                     props2q[
                         f"{min(n0.index[0], n1.index[0])}-{max(n0.index[0], n1.index[0])}"
                     ]["fCZ"],
+                )
+            elif schema == AQT_SCHEMA:
+                properties = characteristics["properties"]
+                props1q = {}
+                for key in properties[
+                    "single_qubit_gate_fidelity"
+                ].keys():  # noqa: SIM118
+                    node1q = str(int(key))
+                    props1q[node1q] = properties["single_qubit_gate_fidelity"][key][
+                        "value"
+                    ]
+                get_node_error: Callable[[Node], float] = (
+                    lambda n: 1.0 - cast("float", props1q[f"{n.index[0]}"]) * 0.01
+                )
+                get_readout_error: Callable[[Node], float] = lambda n: 0.0
+                get_link_error: Callable[[Node, Node], float] = (
+                    lambda n0, n1: 1.0
+                    - cast("float", properties["mean_two_qubit_gate_fidelity"]["value"])
+                    * 0.01
                 )
 
             # readout error as symmetric 2x2 matrix
