@@ -20,5 +20,5 @@ MacOS and Windows. To install, run:
 .. toctree::
    :caption: Useful links
 
-   Issue tracker <https://github.com/CQCL/pytket-braket/issues>
+   Issue tracker <https://github.com/Quantinuum/pytket-braket/issues>
    PyPi <https://pypi.org/project/pytket-braket/>
