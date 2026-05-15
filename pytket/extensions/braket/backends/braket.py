@@ -106,6 +106,7 @@ IQM_SCHEMA = {
 
 _gate_types = {
     "amplitude_damping": None,
+    "barrier": OpType.Barrier,
     "bit_flip": None,
     "ccnot": OpType.CCX,
     "cc_prx": None,
