@@ -3,6 +3,11 @@
 Changelog
 ~~~~~~~~~
 
+Unreleased
+----------
+
+* Add "barrier" to set of recognized gate types.
+
 0.46.0 (January 2026)
 ---------------------
 
