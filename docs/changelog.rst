@@ -3,10 +3,11 @@
 Changelog
 ~~~~~~~~~
 
-Unreleased
-----------
+0.47.0 (May 2026)
+-----------------
 
 * Add "barrier" to set of recognized gate types.
+* Update pytket version requirement to 2.18.
 
 0.46.0 (January 2026)
 ---------------------
