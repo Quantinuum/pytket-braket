@@ -208,7 +208,7 @@ def test_ionq(authenticated_braket_backend: BraketBackend) -> None:
     assert b.valid_circuit(c1)
     c2 = b.get_compiled_circuit(c, optimisation_level=2)
     assert b.valid_circuit(c2)
-    h = b.process_circuit(c0, 10)
+    h = b.process_circuit(c0, 100)
     _ = b.circuit_status(h)
     b.cancel(h)
 
