@@ -208,17 +208,15 @@ def test_ionq(authenticated_braket_backend: BraketBackend) -> None:
     assert b.valid_circuit(c1)
     c2 = b.get_compiled_circuit(c, optimisation_level=2)
     assert b.valid_circuit(c2)
-    # Commented out because of
-    # https://github.com/Quantinuum/pytket-braket/issues/223
-    # h = b.process_circuit(c0, 100)
-    # _ = b.circuit_status(h)
-    # b.cancel(h)
+    h = b.process_circuit(c0, 100)
+    _ = b.circuit_status(h)
+    b.cancel(h)
 
     # Circuit with unused qubits
     c = Circuit(11).H(9).CX(9, 10)
     c = b.get_compiled_circuit(c)
     with pytest.raises(Exception) as e:
-        _ = b.process_circuit(c, 1)
+        h = b.process_circuit(c, 1)
         assert "non-contiguous qubits" in str(e.value)
 
 
