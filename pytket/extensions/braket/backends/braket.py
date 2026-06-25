@@ -1002,7 +1002,7 @@ class BraketBackend(Backend):
 
             props = aws_device.properties.dict()
             try:
-                device_info = props["action"][DeviceActionType.JAQCD]
+                device_info = props["action"][DeviceActionType.OPENQASM]
                 supported_ops = {
                     op.lower() for op in device_info["supportedOperations"]
                 }
