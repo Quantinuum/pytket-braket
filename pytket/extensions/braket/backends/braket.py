@@ -688,7 +688,7 @@ class BraketBackend(Backend):
             return SequencePass(passes)
         return self._rebase_pass
 
-    def default_compilation_pass(self, optimisation_level: int = 2) -> BasePass:
+    def default_compilation_pass(self, optimisation_level: int = 2) -> BasePass:  # noqa: PLR0912
         assert optimisation_level in range(3)
         if not self.verbatim:
             passes = [DecomposeBoxes()]
@@ -703,19 +703,19 @@ class BraketBackend(Backend):
                 and (not self._requires_all_qubits_measured)
             ):
                 arch = self.backend_info.architecture
-                assert isinstance(arch, Architecture)
-                passes.append(
-                    CXMappingPass(
-                        arch,
-                        NoiseAwarePlacement(
+                if isinstance(arch, Architecture):
+                    passes.append(
+                        CXMappingPass(
                             arch,
-                            **get_avg_characterisation(self.characterisation),  # type: ignore
-                        ),
-                        directed_cx=False,
-                        delay_measures=True,
+                            NoiseAwarePlacement(
+                                arch,
+                                **get_avg_characterisation(self.characterisation),  # type: ignore
+                            ),
+                            directed_cx=False,
+                            delay_measures=True,
+                        )
                     )
-                )
-                passes.append(NaivePlacementPass(arch))
+                    passes.append(NaivePlacementPass(arch))
                 passes.append(self.rebase_pass())
                 # If CX weren't supported by the device then we'd need to do another
                 # rebase_pass here. But we checked above that it is.
