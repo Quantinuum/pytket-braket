@@ -3,6 +3,11 @@
 Changelog
 ~~~~~~~~~
 
+Unreleased
+~~~~~~~~~~
+
+* Drop support for Python 3.10.
+
 0.47.0 (May 2026)
 -----------------
 
